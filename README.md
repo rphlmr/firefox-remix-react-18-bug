@@ -1,53 +1,32 @@
-# Welcome to Remix!
+When you have a `Form` (Remix) whith a ` <button type="submit" disabled={disabled}>`, Firefox results in hydratation error 
+`Prop 'disabled' did not match. Server: "null" Client: "true"`.
 
-- [Remix Docs](https://remix.run/docs)
+To solve this issue, just add `autoComplete="off"` on your `Form`
 
-## Development
+Doesn't work with Firefox (103.0.2)
 
-From your terminal:
+```js
+const [isDisabled, setIsDisabled] = useState(false);
 
-```sh
-npm run dev
+// ...
+
+<Form method="post">
+  {/* ... */}
+  <button type="submit" disabled={isDisabled}>Continue</button>
+</Form>
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+Works with Firefox (103.0.2)
 
-## Deployment
+```js
+const [isDisabled, setIsDisabled] = useState(false);
 
-First, build your app for production:
+// ...
 
-```sh
-npm run build
+<Form method="post" autoComplete="off">
+  {/* ... */}
+  <button type="submit" disabled={isDisabled}>Continue</button>
+</Form>
 ```
 
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```
+Source : https://github.com/vercel/next.js/issues/35558
