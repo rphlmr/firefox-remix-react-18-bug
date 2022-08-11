@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { Form, useTransition } from "@remix-run/react";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 export async function action() {
   return json({});
@@ -19,6 +19,8 @@ export default function Index() {
     // some phone number manipulations
     setPhoneNumber({ formatted: input, isValid: input ? true : false });
   }, []);
+
+  console.log(phoneNumber);
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
@@ -47,6 +49,8 @@ export default function Index() {
           id="sub"
           type="submit"
           disabled={disabled || !phoneNumber.isValid}
+          // @ts-expect-error Firefox fix https://github.com/vercel/next.js/issues/35558#issuecomment-1077007477
+          autoComplete="off"
         >
           Continue
         </button>
