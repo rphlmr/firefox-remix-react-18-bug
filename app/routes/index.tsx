@@ -24,7 +24,7 @@ export default function Index() {
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <Form method="post" replace>
+      <Form method="post" replace autoComplete="off" id="my-form">
         <div>
           <label htmlFor="phoneNumber">Phone Number</label>
           <div>
@@ -44,13 +44,11 @@ export default function Index() {
             />
           </div>
         </div>
-
         <button
           id="sub"
           type="submit"
           disabled={disabled || !phoneNumber.isValid}
-          // @ts-expect-error Firefox fix https://github.com/vercel/next.js/issues/35558#issuecomment-1077007477
-          autoComplete="off"
+          form="my-form"
         >
           Continue
         </button>
